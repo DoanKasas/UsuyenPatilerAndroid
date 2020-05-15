@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "71958284940",
+    "firebase_url": "https://sokakhayvanlari-2b981.firebaseio.com",
+    "project_id": "sokakhayvanlari-2b981",
+    "storage_bucket": "sokakhayvanlari-2b981.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71958284940:android:dfd760a7cc6e78f1e089a9",
+        "android_client_info": {
+          "package_name": "com.example.sokakhayvanlari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "71958284940-l1eu760bcfscj54bbv81s6t1ffa7n1kk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9L0DnumK04NFhBgQBJ4pTwFlVjDe6pJ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "71958284940-l1eu760bcfscj54bbv81s6t1ffa7n1kk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
