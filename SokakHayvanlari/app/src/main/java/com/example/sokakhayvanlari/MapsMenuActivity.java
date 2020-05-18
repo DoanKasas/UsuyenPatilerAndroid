@@ -41,6 +41,10 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -184,7 +188,9 @@ public class MapsMenuActivity extends FragmentActivity implements OnMapReadyCall
             patiData.put("hayvanSayisi",hayvanSayi.getText().toString());
             patiData.put("evDurum",kulubeDurum.toString());
             patiData.put("adresAciklama",adresBilgi.getText().toString());
-            patiData.put("zaman", FieldValue.serverTimestamp());
+            Date zaman = new Date();
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            patiData.put("zaman", df.format(zaman));
             firebaseFirestore.collection("Patiler").add(patiData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
