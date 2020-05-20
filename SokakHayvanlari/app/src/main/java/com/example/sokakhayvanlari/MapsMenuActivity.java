@@ -49,6 +49,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 public class MapsMenuActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLongClickListener {
 
@@ -180,6 +181,9 @@ public class MapsMenuActivity extends FragmentActivity implements OnMapReadyCall
                 case R.id.radioVar :{kulubeDurum="Barınacak Yer Var";break;}
                 case R.id.radioYok :{kulubeDurum="Barınacak Yer Yok";break;}
             }
+            Random r=new Random(); //random sınıfı
+            int id=r.nextInt(50000);
+            String idm;
             HashMap<String,Object> patiData = new HashMap<>();
             patiData.put("adres",adres.toString());
             patiData.put("konumx",lat.doubleValue());
@@ -188,12 +192,14 @@ public class MapsMenuActivity extends FragmentActivity implements OnMapReadyCall
             patiData.put("hayvanSayisi",hayvanSayi.getText().toString());
             patiData.put("evDurum",kulubeDurum.toString());
             patiData.put("adresAciklama",adresBilgi.getText().toString());
+            patiData.put("id",id);
+            idm=((id)+"Pati");
             Date zaman = new Date();
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             patiData.put("zaman", df.format(zaman));
-            firebaseFirestore.collection("Patiler").add(patiData).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            firebaseFirestore.collection("Patiler").document(idm).set(patiData).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
-                public void onSuccess(DocumentReference documentReference) {
+                public void onSuccess(Void aVoid) {
                     Intent intent = new Intent(MapsMenuActivity.this,MenuActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);

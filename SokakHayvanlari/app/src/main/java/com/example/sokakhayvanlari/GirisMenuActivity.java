@@ -18,7 +18,6 @@ import com.google.firestore.v1.FirestoreGrpc;
 
 public class GirisMenuActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
-    private FirestoreGrpc firestoreGrpc;
     EditText emailText,sifreText;
 
     @Override
