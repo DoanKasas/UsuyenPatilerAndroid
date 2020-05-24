@@ -2,4 +2,52 @@
     <string name="app_name">SokakHayvanlari</string>
     <string name="title_activity_maps_ekle">Map</string>
     <string name="title_activity_maps_gor">Map</string>
+
+    <string name="kopek_hakkimizda">
+        <b>BİR KAP SU !!! \n</b>
+  <br>Kediler, köpekler ve kuşlar sıcaktan çok fazla etkilenir ve susuz kalması durumunda halsiz düşer, hatta kalp krizi bile geçirebilirler. Bu nedenle sokaklara, parklara veya uygun gördüğünüz yerlere ‘bir kap su’ koyun.
+
+Ancak suyu metal kaba koymamak gerekir. Metal kap daha kolay ısındığından suyun da ısınmasına neden olur. Bu sebeple plastik ya da cam kaplar tercih edebilirsiniz. Su dolu kapları da gölge alanlara yerleştirebilirsiniz.\n\n</br>
+    <br>KÖPEKLER NE YER? \n</br>
+    <br>1.Pirinç \n
+        2.Havuç \n
+        3.Muz \n
+        4.Et \n
+        5.Balık \n
+        6.Marul \n
+        7.Ispanak \n\n</br>
+    <br>KÖPEKLER ÜŞÜR MÜ? \n</br>
+    <br>Köpeklerin tüylerinin birçok işlevi vardır; tüyler köpekleri sıcaktan, soğuktan, zararlı güneş ışınlarından, yaralanmalardan korur ancak tüyler tabi ki köpekleri sonsuz koruma gücüne sahip değildir. Dolayısıyla belirli sıcaklıkların altındaki havalarda köpekler de üşürler.\n\n</br>
+    <br>KÖPEKLER HAKKINDA İLGİNÇ BİLGİLER ! \n</br>
+    <br>1.Köpekler 2 yaşındaki bir çocuğun zekasına sahiptir.\n
+        2.Köpeklerin koku duyusu insanlardan 100.000 kat daha iyidir.\n
+        3.Köpekler, aynı insanlar gibi ruh halinizi yüzünüzden anlayabilen tek hayvan türüdür.\n
+        4.Köpekler, sadece patilerinden terler.\n
+        5.Köpeklerin kulağında en az 18 kas bulunmaktadır. İnsanlarda bu sayı 6\'dır. \n</br>
+    </string>
+
+    <string name="kedi_hakkimizda">
+
+        <b>BİR KAP SU !!! \n</b>
+        <br>Kediler, köpekler ve kuşlar sıcaktan çok fazla etkilenir ve susuz kalması durumunda halsiz düşer, hatta kalp krizi bile geçirebilirler. Bu nedenle sokaklara, parklara veya uygun gördüğünüz yerlere ‘bir kap su’ koyun.
+
+Ancak suyu metal kaba koymamak gerekir. Metal kap daha kolay ısındığından suyun da ısınmasına neden olur. Bu sebeple plastik ya da cam kaplar tercih edebilirsiniz. Su dolu kapları da gölge alanlara yerleştirebilirsiniz.\n\n</br>
+        <br>KEDİLER NE YER ? \n</br>
+        <br>1.Yumurta. Yumurtayı kedinize pişmiş olarak verebilirsiniz. \n
+        2. Nişastalı besinler (Patates, Makarna) Bu besinleri kedimize sadece pişmiş olarak vermeliyiz.\n
+        3. Sebzeler. Sebze biz insanlarda olduğu gibi, kediler içinde hazım ve dengeli beslenme için önemlidir.\n
+        4. Balık \n
+        5. Ciğer \n
+        6. Tavuk \n
+        7. Çim \n\n</br>
+        <br>KEDİLER ÜŞÜR MÜ? \n</br>
+        <br>Çoğu insan tüylerinin kedileri soğuktan koruduğunu düşünür, bu kısmen doğrudur, aslında kedilerin tüyleri onları yalnızca soğuktan değil sıcaktan da korur. Ancak kedilerin tüyleri onları çok soğuk havalarda korumak için tabi ki yetersizdir. Yani kediler üşür mü sorusunun yanıtı evet, kedi dostlarımız da aynı bizler gibi üşür, soğuk nedeniyle hasta olabilir hatta sokak kedileri donarak hayatlarını bile kaybedebilir.\n\n</br>
+        <br>KEDİLER HAKKINDA İLGİNÇ BİLGİLER ! \n</br>
+        <br>1.Kediler ortalama 100 çeşit ses çıkarır. Köpeklerde bu sayı 10’dur. \n
+            2.Kedilerin kulakları çevresinde 20 tane kas vardır. Bu nedenle kulaklarını gayet rahat oynatırlar.\n
+            3.Dişi kediler sağ patilerini daha iyi kullanırken, erkek kediler çoğunlukla sol patide iyidirler. \n
+            4.Kedilerin genellikle laktoza karşı tolerans seviyeleri düşüktür. Yani onlara süt vermekten vazgeçin. \n
+            5.Eski Mısır’da evcil bir kedi öldüğünde tüm ev halkı kaşlarını tıraş yaparak yas tutarmış.\n
+        </br>
+    </string>
 </resources>

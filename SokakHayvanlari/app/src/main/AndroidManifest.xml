@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sokakhayvanlari">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -11,13 +10,13 @@
 
     <application
         android:allowBackup="true"
-        android:windowSoftInputMode="stateVisible|adjustPan"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="stateVisible|adjustPan">
+        <activity android:name=".HakkimizdaActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -32,17 +31,17 @@
 
         <activity
             android:name=".MapsGorActivity"
-            android:windowSoftInputMode="stateVisible|adjustPan"
-            android:label="@string/title_activity_maps_gor"></activity>
+            android:label="@string/title_activity_maps_gor"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".MapsMenuActivity"
-            android:windowSoftInputMode="stateVisible|adjustPan"
-            android:label="@string/title_activity_maps_ekle" />
+            android:label="@string/title_activity_maps_ekle"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity android:name=".MenuActivity" />
         <activity
             android:name=".GirisMenuActivity"
-            android:windowSoftInputMode="stateVisible|adjustPan"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
