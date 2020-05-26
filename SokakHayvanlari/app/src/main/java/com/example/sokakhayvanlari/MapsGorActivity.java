@@ -151,7 +151,6 @@ public class MapsGorActivity extends FragmentActivity implements OnMapReadyCallb
         return false;
     }
 
-
     public void onPatile(View view){
         CollectionReference collectionReference = firebaseFirestore.collection("Patiler");
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -164,23 +163,24 @@ public class MapsGorActivity extends FragmentActivity implements OnMapReadyCallb
                     yerimY = (Double) data.get("konumY");
                     if(latLngX.equals(yerimx)){
                         id = data.get("id").toString();
+                        String docPath=((id)+"Pati");
+                        DocumentReference documentReference = firebaseFirestore.collection("Patiler").document(docPath);
+                        HashMap<String,Object> gunceldata = new HashMap<>();
+                        Date zamann = new Date();
+                        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        gunceldata.put("zaman", df.format(zamann));
+                        documentReference.update(gunceldata).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Intent intent = new Intent(MapsGorActivity.this,MenuActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                            }
+                        });
                     }
                 }
             }
         });
-        String docPath=((id)+"Pati");
-        DocumentReference documentReference = firebaseFirestore.collection("Patiler").document(docPath);
-        HashMap<String,Object> gunceldata = new HashMap<>();
-        Date zamann = new Date();
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        gunceldata.put("zaman", df.format(zamann));
-        documentReference.update(gunceldata).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Intent intent = new Intent(MapsGorActivity.this,MenuActivity.class);
-                startActivity(intent);
-                System.out.println("Başardık");
-            }
-        });
+
     }
 }
