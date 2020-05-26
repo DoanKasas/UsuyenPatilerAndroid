@@ -12,14 +12,13 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity { //Ana Menu
 
     private FirebaseAuth firebaseAuth;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.cikis_menu,menu);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -27,7 +26,6 @@ public class MenuActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.cikis){
             firebaseAuth.signOut();
-
             Intent intent = new Intent(MenuActivity.this, GirisMenuActivity.class);
             startActivity(intent);
             finish();

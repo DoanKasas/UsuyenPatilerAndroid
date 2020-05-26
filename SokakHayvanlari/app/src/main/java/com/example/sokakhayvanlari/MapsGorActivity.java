@@ -5,7 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -45,25 +48,26 @@ public class MapsGorActivity extends FragmentActivity implements OnMapReadyCallb
 
     private GoogleMap mMap;
     private FirebaseFirestore firebaseFirestore;
+    Button patile;
+    TextView bilgi;
+    TextView hayvanSayi;
+    TextView evDurum;
+    TextView adres;
+    TextView hayvanCesit;
+
     Double lat;
     Double lng;
     String hayvanEvDurum;
     String hayvanSay;
-    String adres;
     String adresAciklama;
     String hayvanTuru;
     String zaman;
-    Button patile;
-    TextView bilgi;
-    LatLng latLng;
     LatLng yerler;
     LatLng yemis;
     Double yerimx;
-    Double latLngX;
-    Double latlngY;
     Double yerimY;
     String id;
-
+    String dokumanId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +79,12 @@ public class MapsGorActivity extends FragmentActivity implements OnMapReadyCallb
         mapFragment.getMapAsync(this);
         patile=findViewById(R.id.patile);
         bilgi=findViewById(R.id.bilgi);
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        hayvanSayi=findViewById(R.id.textHaySay);
+        adres=findViewById(R.id.textAdres);
+        hayvanCesit=findViewById(R.id.textTur);
+        evDurum =findViewById(R.id.textEvDurum);
+
+        firebaseFirestore = FirebaseFirestore.getInstance(); // Firebase bağlantısı için
         getDataFromFirestore();
     }
 
@@ -92,42 +101,36 @@ public class MapsGorActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        LatLng turkey = new LatLng(38.9536173,35.3123577);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(turkey,5));
         mMap.setOnMarkerClickListener(this);
     }
 
-    public void getDataFromFirestore(){
-        CollectionReference collectionReference = firebaseFirestore.collection("Patiler");
+    public void getDataFromFirestore(){  // Firestoreden verileri çekme
+        CollectionReference collectionReference = firebaseFirestore.collection("Patiler"); //Koleksiyon Adı
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-               for (DocumentSnapshot snapshot: queryDocumentSnapshots.getDocuments()){
+               for (DocumentSnapshot snapshot: queryDocumentSnapshots.getDocuments()){ // Döküman Içeriği
                    Map<String,Object> data = snapshot.getData();
                    zaman = (String) data.get("zaman").toString();
                    Date bugün = new Date();
                    DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-                   if(df.format(bugün).equals(zaman)){
+                   if(df.format(bugün).equals(zaman)){ // Firebasedeki zaman değeleri bugüne eşit olanlar
                        lat = (Double) data.get("konumx");
                        lng = (Double) data.get("konumY");
-                       adres=(String) data.get("adres");
-                       adresAciklama=(String) data.get("adresAciklama");
-                       hayvanTuru=(String) data.get("hayvanTuru");
-                       hayvanEvDurum = (String) data.get("evDurum");
-                       hayvanSay = (String) data.get("hayvanSayisi");
-                       yerler= new LatLng(lat, lng);
-                       MarkerOptions options = new MarkerOptions().position(yerler).title(zaman).draggable(false);
+                       yerler= new LatLng(lat, lng); //Haritadaki konumlarını alıyoruz
+                       MarkerOptions options = new MarkerOptions().position(yerler).title("En Son Patilenen Zaman").snippet(zaman).draggable(false);
                        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                        mMap.addMarker(options);
                    }
                    else{
                        lat = (Double) data.get("konumx");
                        lng = (Double) data.get("konumY");
-                       hayvanEvDurum = (String) data.get("evDurum");
-                       hayvanSay = (String) data.get("hayvanSayisi");
                        yemis = new LatLng(lat, lng);
                        mMap.addMarker(new MarkerOptions().position(yemis).title("En Son Patilenen Zaman").snippet(zaman).draggable(true));
-
                    }
                }
             }
@@ -135,52 +138,62 @@ public class MapsGorActivity extends FragmentActivity implements OnMapReadyCallb
     }
 
     @Override
-    public boolean onMarkerClick(Marker marker) {
-        if (marker.isDraggable()==false){
-            bilgi.setText("Yakın Zamanda Patilendim diğer dostlarıma yardım et"+"\n"+"          Bizi unutmadığın için Teşekkür Ederiz :)");
-            patile.setVisibility(View.INVISIBLE);
-        }
-        else if (marker.isDraggable()==true)
-        {
-            latLng = marker.getPosition();
-            latLngX = latLng.latitude;
-            latlngY = latLng.longitude;
-            bilgi.setText("Patileyebilirmisin :( Uzun zamandır patilenmeye ihtiyacımız var");
-            patile.setVisibility(View.VISIBLE);
-        }
-        return false;
-    }
-
-    public void onPatile(View view){
+    public boolean onMarkerClick(final Marker marker) { //Marker tıklandığında gerçekleşecekler
         CollectionReference collectionReference = firebaseFirestore.collection("Patiler");
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                for (DocumentSnapshot snapshot: queryDocumentSnapshots.getDocuments()){
-                    Map<String,Object> data = snapshot.getData();
+                for (DocumentSnapshot snapshot : queryDocumentSnapshots.getDocuments()) { //
+                    Map<String, Object> data = snapshot.getData();
                     yerimx = (Double) data.get("konumx");
                     yerimY = (Double) data.get("konumY");
-                    if(latLngX.equals(yerimx)){
-                        id = data.get("id").toString();
-                        String docPath=((id)+"Pati");
-                        DocumentReference documentReference = firebaseFirestore.collection("Patiler").document(docPath);
-                        HashMap<String,Object> gunceldata = new HashMap<>();
-                        Date zamann = new Date();
-                        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                        gunceldata.put("zaman", df.format(zamann));
-                        documentReference.update(gunceldata).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Intent intent = new Intent(MapsGorActivity.this,MenuActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
-                            }
-                        });
+                    hayvanEvDurum = (String) data.get("evDurum");
+                    hayvanSay = (String) data.get("hayvanSayisi");
+                    adresAciklama = (String) data.get("adresAciklama");
+                    hayvanTuru = (String) data.get("hayvanTuru");
+                    id = data.get("id").toString();
+                    if (marker.isDraggable() == true) {
+                        if (marker.getPosition().latitude == yerimx && marker.getPosition().longitude == yerimY){
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 13));
+                            bilgi.setText("Patileyebilirmisin :( Uzun zamandır patilenmeye ihtiyacımız var");
+                            hayvanSayi.setText("Hayvan Sayisi: "+hayvanSay);
+                            evDurum.setText("Baraka Durumu: "+hayvanEvDurum);
+                            adres.setText("Adres Açıklaması: "+adresAciklama);
+                            hayvanCesit.setText("Patiler: "+hayvanTuru);
+                            dokumanId=id;
+                            patile.setVisibility(View.VISIBLE);
+                        }
+                    } else if (marker.isDraggable() == false) {
+                        if (marker.getPosition().latitude == yerimx && marker.getPosition().longitude == yerimY) {
+                            bilgi.setText("Yakın Zamanda Patilendim diğer dostlarıma yardım et" + "\n" + "          Bizi unutmadığın için Teşekkür Ederiz :)");
+                            hayvanSayi.setText("Hayvan Sayisi: " + hayvanSay);
+                            evDurum.setText("Baraka Durumu: " + hayvanEvDurum);
+                            adres.setText("Adres Açıklaması: " + adresAciklama);
+                            hayvanCesit.setText("Patiler: " + hayvanTuru);
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 10));
+                            patile.setVisibility(View.INVISIBLE);
+                        }
                     }
                 }
             }
         });
+        return false;
+    }
 
+    public void onPatile(View view){// Yemek verilen hayvanın bilgilerini güncelleme
+        String docPath=((dokumanId)+"Pati");
+        DocumentReference documentReference = firebaseFirestore.collection("Patiler").document(docPath);
+        HashMap<String,Object> gunceldata = new HashMap<>();
+        Date zamann = new Date();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        gunceldata.put("zaman", df.format(zamann));
+        documentReference.update(gunceldata).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) { //Bilgiler Güncelleniyor..
+                Intent intent = new Intent(MapsGorActivity.this,MenuActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
     }
 }

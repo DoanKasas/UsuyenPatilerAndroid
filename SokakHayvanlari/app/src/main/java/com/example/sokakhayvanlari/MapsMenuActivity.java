@@ -85,6 +85,7 @@ public class MapsMenuActivity extends FragmentActivity implements OnMapReadyCall
         checkKopek = findViewById(R.id.checkKopek);
         hayvanSayi = findViewById(R.id.textHayvanSayi);
         adresBilgi = findViewById(R.id.textAdres);
+
         evVar = findViewById(R.id.radioVar);
         evYok = findViewById(R.id.radioYok);
         kulubeGrup = findViewById(R.id.radioKulube);
@@ -109,6 +110,8 @@ public class MapsMenuActivity extends FragmentActivity implements OnMapReadyCall
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+                LatLng userLocation = new LatLng(location.getLatitude(),location.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation,8));
             }
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -143,7 +146,7 @@ public class MapsMenuActivity extends FragmentActivity implements OnMapReadyCall
     }
 
     @Override
-    public void onMapLongClick(LatLng latLng) {
+    public void onMapLongClick(LatLng latLng) { // Mapte uzun tıklama yapınca marker geliyor
         mMap.clear();
         lat =latLng.latitude;
         lng =latLng.longitude;
