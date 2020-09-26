@@ -1,2 +1,2 @@
 # UsuyenPatilerAndroid
-Sokak hayvanları takip projesi. Google haritalar ve firebase kullanılarak,mobil programlama dönsm ödevi için geliştirilmiştir
+Sokak hayvanları takip projesi. Google haritalar ve firebase kullanılarak,mobil programlama dönem ödevi için geliştirilmiştir.
